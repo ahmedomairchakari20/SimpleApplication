@@ -1,6 +1,18 @@
 version: 2.1
 
 jobs:
+  test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
+          name: Run Tests
+          command: npm test
+
   deploy:
     docker:
       - image: arvindr226/alpine-ssh
@@ -10,4 +22,7 @@ jobs:
 workflows:
   deploy-to-ec2:
     jobs:
-      - deploy
+      - test
+      - deploy:
+          requires:
+            - test
