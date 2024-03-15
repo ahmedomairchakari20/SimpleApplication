@@ -7,8 +7,15 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Dependencies
+          command: |
+            cd /home/circleci/project/app 
+            npm install
+      - run:
           name: Run Tests
-          command: npm test
+          command: |
+            cd /home/circleci/project/app  
+            npm test
 
   deploy:
     docker:
